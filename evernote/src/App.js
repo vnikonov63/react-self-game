@@ -31,12 +31,13 @@ function App() {
             </div>
           </PrivateRouter>
           <PrivateRouter path="/user/:id/game" exact>
-            THE GAME FOR THE USER
+            <div className="flex margin">
+              <TableCards />
+            </div>
           </PrivateRouter>
           <PrivateRouter path="/secret" exact></PrivateRouter>
         </Switch>
       </Router>
-      <TableCards />
     </>
   );
 }

@@ -4,7 +4,6 @@ const db = require("./database/db");
 const User = require("./models/user");
 const Card = require("./models/card");
 
-
 const app = express();
 
 const port = 3001;
@@ -72,6 +71,7 @@ app.post("/api/register", async (req, res) => {
 
 app.get("/api", async (req, res) => {
   const cards = await Card.find();
+  console.log(cards);
   res.json(cards);
 });
 
