@@ -2,7 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const db = require("./db");
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/react-evernote", {
+mongoose.connect("mongodb://localhost:27017/self-game", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -18,6 +18,13 @@ app.use(
     secret: "SHJHDJKSHD",
   })
 );
+
+app.delete("/user", (req, res) => {
+  console.log(req.session);
+  req.session.destroy();
+  console.log(req.session);
+  res.end();
+});
 
 app.get("/", (req, res) => {
   res.send("Hello World");

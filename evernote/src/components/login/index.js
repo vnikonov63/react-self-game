@@ -4,7 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import { useDispatch, useSelector } from "react-redux";
 import { InputBase } from "@material-ui/core";
+import { setUser, deleteUser } from "../../redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   width: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function LogIn() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
   const [inputs, setInputs] = useState({
@@ -35,8 +38,8 @@ function LogIn() {
     });
     if (response.status === 200) {
       const finalResult = await response.json();
-      console.log(finalResult);
-      return history.push("/secret");
+      dispatch(setUser(finalResult));
+      return history.push(`/user/${finalResult.id}`);
     } else {
       const finalResult = await response.json();
       setFailed(finalResult.message);

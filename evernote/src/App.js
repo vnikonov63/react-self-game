@@ -3,6 +3,8 @@ import "./App.css";
 import LogIn from "./components/login";
 import Registration from "./components/registration";
 import NavBar from "./components/navbar";
+import User from "./components/user";
+import PrivateRouter from "./components/PrivateRouter";
 
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
@@ -22,9 +24,15 @@ function App() {
               <Registration></Registration>
             </div>
           </Route>
-          <Route path="/secret" exact>
-            <div className="flex margin">The OK WAS GOOD</div>
-          </Route>
+          <PrivateRouter path="/user/:id" exact>
+            <div className="flex margin">
+              <User></User>
+            </div>
+          </PrivateRouter>
+          <PrivateRouter path="/user/:id/game" exact>
+            THE GAME FOR THE USER
+          </PrivateRouter>
+          <PrivateRouter path="/secret" exact></PrivateRouter>
         </Switch>
       </Router>
     </>
