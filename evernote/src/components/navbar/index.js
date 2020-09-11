@@ -6,6 +6,9 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import InputIcon from "@material-ui/icons/Input";
 import HomeRoundedIcon from "@material-ui/icons/HomeRounded";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
+import TimeToLeaveIcon from "@material-ui/icons/TimeToLeave";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser, deleteUser } from "../../redux/actions";
 
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
@@ -16,8 +19,20 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleBottomNavigation() {
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.user);
   const classes = useStyles();
   // const [value, setValue] = React.useState(0);
+  async function out(event) {
+    dispatch(deleteUser());
+    event.preventDefault();
+    const response = await fetch("/user", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
 
   return (
     <Box
@@ -42,29 +57,50 @@ export default function SimpleBottomNavigation() {
             </Link>
           }
         />
-        <BottomNavigationAction
-          label="Log in"
-          icon={
-            <Link to="/login">
-              <InputIcon
-                style={{
-                  fontSize: 60,
-                  color: "#51e2f5",
-                  marginLeft: 40,
-                  marginRight: 40,
-                }}
-              />
-            </Link>
-          }
-        />
-        <BottomNavigationAction
-          label="Register"
-          icon={
-            <Link to="/register">
-              <LockOpenIcon style={{ fontSize: 60, color: "#51e2f5" }} />
-            </Link>
-          }
-        ></BottomNavigationAction>
+        {isAuth ? (
+          <BottomNavigationAction
+            label="Log Out"
+            icon={
+              <Link to="/home">
+                <TimeToLeaveIcon
+                  style={{
+                    fontSize: 60,
+                    color: "#51e2f5",
+                    marginLeft: 40,
+                    marginRight: 40,
+                  }}
+                  onClick={out}
+                />
+              </Link>
+            }
+          />
+        ) : (
+          <>
+            <BottomNavigationAction
+              label="Log in"
+              icon={
+                <Link to="/login">
+                  <InputIcon
+                    style={{
+                      fontSize: 60,
+                      color: "#51e2f5",
+                      marginLeft: 40,
+                      marginRight: 40,
+                    }}
+                  />
+                </Link>
+              }
+            />
+            <BottomNavigationAction
+              label="Register"
+              icon={
+                <Link to="/register">
+                  <LockOpenIcon style={{ fontSize: 60, color: "#51e2f5" }} />
+                </Link>
+              }
+            ></BottomNavigationAction>
+          </>
+        )}
       </BottomNavigation>
     </Box>
   );
