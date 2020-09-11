@@ -1,0 +1,21 @@
+.flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+}
+
+.margin {
+  margin-top: 200px;
+}
+
+.align {
+  align-self: center;
+  justify-self: center;
+}
+
+.yellow {
+  background-color: #51e2f5;
+}

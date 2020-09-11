@@ -1,0 +1,10 @@
+import { SET_USER } from "./action-type";
+
+export default function setUser(user) {
+  return {
+    type: SET_USER,
+    payload: {
+      user,
+    },
+  };
+}
