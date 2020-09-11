@@ -15,6 +15,9 @@
   align-self: center;
   justify-self: center;
 }
+.between {
+  justify-content: space-around;
+}
 
 .yellow {
   /* background-color: #3d9aa7; */
@@ -23,4 +26,22 @@
 
 .TableCards {
   width: 300px;
+}
+
+.buttonModal {
+  margin-top: 10px;
+  width: 200px;
+  height: 40px;
+  background-color: red;
+  border-radius: 5px;
+}
+
+.border {
+  border: 1px solid black;
+  width: 700px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

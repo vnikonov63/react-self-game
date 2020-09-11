@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -10,10 +11,12 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import OneRow from "../OneRow/OneRow.js";
+import Modal from "../../components/modal";
+import { setResult, switchResult } from "../../redux/actions";
 
 const useStyles = makeStyles({
   root: {
-    background: "linear-gradient(45deg, #3d9aa7 30%, #0ec6ccf5 90%)",
+    // background: "linear-gradient(45deg, #3d9aa7 30%, #0ec6ccf5 90%)",
     borderRadius: 3,
   },
   table: {
@@ -24,6 +27,11 @@ const useStyles = makeStyles({
     width: "100px",
     height: "100px",
     textAlign: "center",
+    background: "yellow",
+  },
+  no: {
+    visibility: "hidden",
+    backgroundColor: "white",
   },
 });
 
@@ -32,16 +40,20 @@ const useStyles = makeStyles({
 // }
 
 function TableCards() {
+  const dispatch = useDispatch();
   const classes = useStyles();
-
-  const [table, setTable] = useState(null);
+  const score = useSelector((state) => state.user.score);
+  const switchArray = useSelector((state) => state.results);
+  const [table, setTable] = useState([]);
   const [modal, setModal] = useState(null);
+  const [id, setId] = useState(null);
 
-  function module(question) {
-    // if (!modal) {
-    //   setModal(true)
-    // }
-    console.log(question);
+  function module(question, indexOut, index) {
+    if (!modal) {
+      setModal(true);
+      setId(question);
+    }
+    dispatch(switchResult(indexOut, index));
   }
 
   useEffect(() => {
@@ -49,18 +61,28 @@ function TableCards() {
       const response = await fetch("/api");
       const array = await response.json();
       setTable(array);
+      let outter = array.length;
+      let inner;
+      array.forEach((element) => {
+        inner = element.questions.length;
+      });
+      dispatch(setResult(new Array(outter).fill(new Array(inner).fill(true))));
     })();
   }, []);
-
-  console.log(table);
-
+  console.log(switchArray);
   return (
     <>
+      <div className="flex">
+        <h3 className="align">Score: {score}</h3>
+      </div>
+      <div className="flex">
+        {modal && <Modal setModal={setModal} dataFromParent={id} />}
+      </div>
       <TableContainer component={Paper}>
         <Table className={classes.root} aria-label="simple table">
           <TableBody>
             {table &&
-              table.map((row, index) => (
+              table.map((row, indexOut) => (
                 <TableRow key={row._id}>
                   <TableCell
                     key={row._id}
@@ -70,21 +92,34 @@ function TableCards() {
                   >
                     {row.theme}
                   </TableCell>
-                  {row.questions.map((element, index) => {
-                    return (
-                      <TableCell
-                        key={element._id}
-                        className={classes.el}
-                        component="th"
-                        scope="row"
-                        onClick={() => {
-                          module(row.questions[index]);
-                        }}
-                      >
-                        {row.questions[index].price}
-                      </TableCell>
-                    );
-                  })}
+                  {switchArray.length &&
+                    row.questions.map((element, index) => {
+                      return switchArray[indexOut][index] ? (
+                        <TableCell
+                          key={element._id}
+                          className={classes.el}
+                          component="th"
+                          scope="row"
+                          onClick={() => {
+                            module(row.questions[index], indexOut, index);
+                          }}
+                        >
+                          {row.questions[index].price}
+                        </TableCell>
+                      ) : (
+                        <TableCell
+                          key={element._id}
+                          className={`${classes.el} ${classes.no}`}
+                          component="th"
+                          scope="row"
+                          onClick={() => {
+                            module(row.questions[index], indexOut, index);
+                          }}
+                        >
+                          {row.questions[index].price}
+                        </TableCell>
+                      );
+                    })}
                 </TableRow>
               ))}
           </TableBody>

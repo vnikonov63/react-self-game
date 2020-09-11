@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
       message: (props) => `${props.value} is not a valid password`,
     },
   },
+  score: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("User", userSchema);

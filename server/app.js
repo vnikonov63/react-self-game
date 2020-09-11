@@ -33,7 +33,12 @@ app.post("/api/login", async (req, res) => {
     if (user.password === password) {
       req.session.user = user.name;
       res.status(200);
-      return res.json({ id: user._id, name: user.name, eMail: user.eMail });
+      return res.json({
+        id: user._id,
+        name: user.name,
+        eMail: user.eMail,
+        score: user.score,
+      });
     } else {
       res.status(401);
       res.json({ message: "The password you provided is actually wrong" });
@@ -65,7 +70,12 @@ app.post("/api/register", async (req, res) => {
     // Мы не храним пароли в сесии и не передаем на фронт
     req.session.user = user.name;
     res.status(200);
-    return res.json({ id: user._id, name: user.name, eMail: user.eMail });
+    return res.json({
+      id: user._id,
+      name: user.name,
+      eMail: user.eMail,
+      score: user.score,
+    });
   }
 });
 
