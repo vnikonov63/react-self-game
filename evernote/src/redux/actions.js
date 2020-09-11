@@ -1,10 +1,16 @@
-import { SET_USER } from "./action-type";
+import { SET_USER, DELETE_USER } from "./action-type";
 
-export default function setUser(user) {
+export function setUser(user) {
   return {
     type: SET_USER,
     payload: {
       user,
     },
+  };
+}
+
+export function deleteUser() {
+  return {
+    type: DELETE_USER,
   };
 }

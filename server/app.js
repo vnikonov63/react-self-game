@@ -16,6 +16,13 @@ app.use(
   })
 );
 
+app.delete("/user", (req, res) => {
+  console.log(req.session);
+  req.session.destroy();
+  console.log(req.session);
+  res.end();
+});
+
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
