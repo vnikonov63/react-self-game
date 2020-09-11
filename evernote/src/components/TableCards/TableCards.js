@@ -35,6 +35,14 @@ function TableCards() {
   const classes = useStyles();
 
   const [table, setTable] = useState(null);
+  const [modal, setModal] = useState(null);
+
+  function module(question) {
+    // if (!modal) {
+    //   setModal(true)
+    // }
+    console.log(question);
+  }
 
   useEffect(() => {
     (async () => {
@@ -69,6 +77,9 @@ function TableCards() {
                         className={classes.el}
                         component="th"
                         scope="row"
+                        onClick={() => {
+                          module(row.questions[index]);
+                        }}
                       >
                         {row.questions[index].price}
                       </TableCell>
