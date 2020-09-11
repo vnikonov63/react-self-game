@@ -3,6 +3,7 @@ import "./App.css";
 import LogIn from "./components/login";
 import Registration from "./components/registration";
 import NavBar from "./components/navbar";
+import TableCards from "./components/TableCards/TableCards.js";
 
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
@@ -27,6 +28,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
+      <TableCards />
     </>
   );
 }
