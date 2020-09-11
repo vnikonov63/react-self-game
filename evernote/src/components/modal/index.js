@@ -48,18 +48,24 @@ function Modal(props) {
             );
           })}
         </div>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Enter the ответ
-            <input
-              type="text"
-              name="answer"
-              onChange={handleChange}
-              value={answer}
-            ></input>
-            <input type="submit" name="answer"></input>
-          </label>
-        </form>
+        <div class="align">
+          <form onSubmit={handleSubmit}>
+            <label>
+              <input
+                type="text"
+                name="answer"
+                className="input"
+                onChange={handleChange}
+                value={answer}
+              ></input>
+              <input
+                className="inputButton"
+                type="submit"
+                name="answer"
+              ></input>
+            </label>
+          </form>
+        </div>
       </div>
     </div>
   );

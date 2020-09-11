@@ -90,7 +90,7 @@ function TableCards() {
                     component="th"
                     scope="row"
                   >
-                    {row.theme}
+                    <h1>{row.theme}</h1>
                   </TableCell>
                   {switchArray.length &&
                     row.questions.map((element, index) => {
@@ -104,7 +104,7 @@ function TableCards() {
                             module(row.questions[index], indexOut, index);
                           }}
                         >
-                          {row.questions[index].price}
+                          <h1>{row.questions[index].price}</h1>
                         </TableCell>
                       ) : (
                         <TableCell
