@@ -17,5 +17,10 @@
 }
 
 .yellow {
-  background-color: #51e2f5;
+  /* background-color: #3d9aa7; */
+  background-color: #0ec6ccf5;
+}
+
+.TableCards {
+  width: 300px;
 }

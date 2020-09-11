@@ -1,12 +1,9 @@
 const express = require("express");
 const session = require("express-session");
-const db = require("./db");
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/self-game", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const db = require("./database/db");
 const User = require("./models/user");
+const Card = require("./models/card");
+
 
 const app = express();
 
@@ -71,6 +68,11 @@ app.post("/api/register", async (req, res) => {
     res.status(200);
     return res.json({ id: user._id, name: user.name, eMail: user.eMail });
   }
+});
+
+app.get("/api", async (req, res) => {
+  const cards = await Card.find();
+  res.json(cards);
 });
 
 app.use((req, res, next) => {

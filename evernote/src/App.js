@@ -3,6 +3,7 @@ import "./App.css";
 import LogIn from "./components/login";
 import Registration from "./components/registration";
 import NavBar from "./components/navbar";
+import TableCards from "./components/TableCards/TableCards.js";
 import User from "./components/user";
 import PrivateRouter from "./components/PrivateRouter";
 
@@ -35,6 +36,7 @@ function App() {
           <PrivateRouter path="/secret" exact></PrivateRouter>
         </Switch>
       </Router>
+      <TableCards />
     </>
   );
 }
